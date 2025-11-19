@@ -11,8 +11,8 @@ interface SetItemProps {
 const SetItem = ({set, onCompleteChange, onDeleted }: SetItemProps) => {
   return (
         <div 
-        className={`grid items-center grid-cols-4 gap-4 border rounded-md p-2 hover:bg-slate-100 ${
-        set.completed ? 'bg-green-200' : ''}`}
+        className={`grid items-center grid-cols-4 gap-4 border rounded-md p-2 bg-gray-400  hover:bg-slate-500 ${
+        set.completed ? 'bg-green-700' : ''}`}
         key={set.id}>
           <div>Reps: {set.reps} </div>
           <div>Weight: {set.weight} </div>
@@ -26,7 +26,7 @@ const SetItem = ({set, onCompleteChange, onDeleted }: SetItemProps) => {
             <span>Completed</span>
           </label>
           <button 
-          className={`border ${set.completed? 'bg-gray-200' : 'bg-red-300'} rounded-md`}
+          className={`border-0 ${set.completed? 'bg-gray-400' : 'bg-red-500'} rounded-md`}
           onClick={() => onDeleted(set.id)}>Delete</button>
         </div>
   )

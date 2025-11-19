@@ -1,7 +1,7 @@
 import { WorkoutSet } from "../types/set"
 import SetItem from "./SetItem"
 
-export interface SetListProps {
+interface SetListProps {
     sets: WorkoutSet[],
     onCompleteChange: (id: number, completed: boolean) => void;
     onDeleted: (id: number) => void;

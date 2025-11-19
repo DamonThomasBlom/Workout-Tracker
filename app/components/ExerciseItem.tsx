@@ -1,26 +1,27 @@
 import { Exercise } from "../types/exercise"
 import { WorkoutSet } from "../types/set"
-import SetsList, { SetListProps } from "./SetsList"
+import SetsList from "./SetsList"
 
 interface ExerciseItemProps {
-    setListProps : SetListProps
-    exercise : Exercise
+    exercise: Exercise;
+    onCompleteChange: (id: number, completed: boolean) => void;
+    onDeleted: (id: number) => void;
 }
 
-export default function ExerciseItem({sets, onCompleteChange, onDeleted}: SetListProps){
+export default function ExerciseItem({exercise, onCompleteChange, onDeleted}: ExerciseItemProps){
     return (
         <div className="p-4">
             <div className="border-2 rounded-md p-2 space-x-1 bg-gray-700">
-                <h1 className="text-2xl font-bold text-blue-400">Workout Name Here</h1>
+                <h1 className="text-2xl font-bold text-blue-400">Workrout {exercise.name}</h1>
 
-                                <SetsList
-                                sets={sets}
-                                onCompleteChange={onCompleteChange}
-                                onDeleted={onDeleted}
-                                />
+                <SetsList
+                sets={exercise.sets}
+                onCompleteChange={onCompleteChange}
+                onDeleted={onDeleted}
+                />
 
                 <div className="flex justify-end items-end ">
-                    <button className="border bg-red-300 rounded-md p-2">
+                    <button className="border-2 bg-red-500 rounded-md p-2">
                         Delete Exercise
                     </button>
                 </div>

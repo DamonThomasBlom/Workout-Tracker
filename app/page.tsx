@@ -6,9 +6,10 @@ import AddSetForm from "./components/AddSetForm";
 import { WorkoutSet } from "./types/set";
 import SetsList from "./components/SetsList";
 import ExerciseItem from "./components/ExerciseItem";
+import { Exercise } from "./types/exercise";
 
 export default function Home() {
-  const [sets, setSets] = useState(dummyData)
+  const [dummySets, setSets] = useState(dummyData)
 
   function onCompleteChange(id: number, completed: boolean){
     setSets((prevSets) => 
@@ -34,6 +35,24 @@ export default function Home() {
     }
     
     setSets((prevSets) => [...prevSets, newSet]);
+  }
+
+  const dummyExercise: Exercise = {
+    id: 1,
+    name: "Bench Press",
+    sets: dummySets
+  }
+
+    const dummyExercise2: Exercise = {
+    id: 2,
+    name: "Squat",
+    sets: dummySets
+  }
+
+  const dummyExercise3: Exercise = {
+    id: 3,
+    name: "Deadlift",
+    sets: dummySets
   }
 
   return (
@@ -65,7 +84,17 @@ export default function Home() {
           </div>
         </div> */}
         <ExerciseItem 
-          sets={sets}
+          exercise={dummyExercise}
+          onCompleteChange={onCompleteChange}
+          onDeleted={onDeleted}
+        />
+                <ExerciseItem 
+          exercise={dummyExercise2}
+          onCompleteChange={onCompleteChange}
+          onDeleted={onDeleted}
+        />
+                <ExerciseItem 
+          exercise={dummyExercise3}
           onCompleteChange={onCompleteChange}
           onDeleted={onDeleted}
         />
