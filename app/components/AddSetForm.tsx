@@ -5,10 +5,6 @@ interface SetFormProps {
 }
 
 export default function AddSetForm({onSubmit}: SetFormProps) {
-//   const [currentSetForm, SetForm] = useState({
-//     weight: 0,
-//     reps: 0,
-// })
 
   const [currentWeight , SetWeight] = useState(0);
   const [currentReps , SetReps] = useState(0);
@@ -47,13 +43,13 @@ export default function AddSetForm({onSubmit}: SetFormProps) {
       </label>
       <button 
         type='submit'
-        className='border h-8 bg-green-200 rounded-md p-2 text-center flex items-center justify-center'>
+        className='border h-8 bg-green-600 rounded-md p-2 text-center flex items-center justify-center'>
         Submit
       </button>
     </form> 
     : <div className='p-2'>
       <button
-      className='border rounded-md bg-green-200 p-2'
+      className='border rounded-md bg-green-600 p-2'
       onClick={() => SetCreatingSet(!creatingSet)}>
         Create Set
       </button>
