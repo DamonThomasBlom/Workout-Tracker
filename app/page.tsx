@@ -2,6 +2,7 @@
 import { useState } from "react";
 import ExerciseItem from "./components/ExerciseItem";
 import { exerciseDummyData } from "./data/exerciseDummyData";
+import { ExerciseAction, WorkoutSet } from "./types/set";
 
 export default function Home() {
 
@@ -15,38 +16,56 @@ export default function Home() {
     ))
   }
 
+  function onSetAction(exerciseId: number, setId: number, action: ExerciseAction){
+    setExercises((prevExercises) => (
+      prevExercises.map(exercise => {
+        if (exercise.id !== exerciseId) return exercise;
+
+        switch(action.type){
+          case "complete":
+            return { ...exercise, sets: exercise.sets.map(s =>
+              s.id === setId ? {...s, completed: action.value ?? false } : s
+            )}
+
+          case "delete":
+            return {
+              ...exercise, sets: exercise.sets.filter(set => (
+                set.id !== setId
+              ))
+            }
+          case "submit":
+            const newSet: WorkoutSet = {
+              id: Date.now(),
+              weight: action.set?.weight ?? 0,
+              reps: action.set?.reps ?? 0,
+              completed: false
+            }
+
+            return { ...exercise, sets: [...exercise.sets, newSet] }
+        }
+        return exercise;
+      })
+    ))
+  }
+
   return (
       <main>
         <h1 className="font-bold text-3xl text-center p-2">Workout Tracker</h1>
-        {/* <SetsList
-         sets={sets}
-         onCompleteChange={onCompleteChange}
-         onDeleted={onDeleted}
-         /> */}
-        {/* <AddSetForm
-        onSubmit={onSubmit}
-        /> */}
-        {/* <div className="p-4">
-          <div className="border-2 rounded-md p-2 space-x-1 bg-gray-700">
-              <h1 className="text-2xl font-bold text-blue-400">Workout Name Here</h1>
-
-              <SetsList
-              sets={sets}
-              onCompleteChange={onCompleteChange}
-              onDeleted={onDeleted}
-              />
-
-              <div className="flex justify-end items-end ">
-                  <button className="border bg-red-300 rounded-md p-2">
-                      Delete Exercise
-                  </button>
-              </div>
-          </div>
-        </div> */}
-        <ExerciseItem 
+        {
+          dummyExcercises.map(exercise => (
+            <ExerciseItem 
+              key={exercise.id}
+              exercise={exercise}
+              onExerciseDeleted={onExerciseDeleted}
+              onSetAction={onSetAction}
+            />
+          ))
+        }
+        {/* <ExerciseItem 
           exercise={dummyExcercises[0]}
           onExerciseDeleted={onExerciseDeleted}
-        />
+          onSetAction={onSetAction}
+        /> */}
       </main>
   );
 }

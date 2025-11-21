@@ -1,22 +1,22 @@
-import { WorkoutSet } from "../types/set"
+import { ExerciseAction, WorkoutSet } from "../types/set"
 import SetItem from "./SetItem"
 
 interface SetListProps {
     sets: WorkoutSet[],
-    onCompleteChange: (id: number, completed: boolean) => void;
-    onDeleted: (id: number) => void;
+    exerciseId : number
+    onSetAction: (exerciseId: number, setId: number, action: ExerciseAction) => void;
 }
 
-export default function SetsList({sets, onCompleteChange, onDeleted}: SetListProps) {
+export default function SetsList({sets, exerciseId, onSetAction}: SetListProps) {
     return (
         <div className="p-2 space-y-1">
         {
             sets.map(set => {
-            return SetItem({
-                set,
-                onCompleteChange,
-                onDeleted
-            })
+                return SetItem({
+                    set,
+                    exerciseId,
+                    onSetAction
+                })
             })
         }
         </div>

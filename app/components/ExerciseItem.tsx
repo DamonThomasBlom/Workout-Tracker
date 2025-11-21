@@ -1,35 +1,15 @@
-import { useState } from "react";
 import { Exercise } from "../types/exercise"
 import SetsList from "./SetsList"
-import { dummyData } from "../data/setsDummyData";
-import { WorkoutSet } from "../types/set";
+import { ExerciseAction, WorkoutSet } from "../types/set";
 import AddSetForm from "./AddSetForm";
 
 interface ExerciseItemProps {
     exercise: Exercise;
-    // onCompleteChange: (id: number, completed: boolean) => void;
-    // onDeleted: (id: number) => void;
     onExerciseDeleted: (id: number) => void;
+    onSetAction: (exerciseId: number, setId: number, action: ExerciseAction) => void;
 }
 
-export default function ExerciseItem({exercise, onExerciseDeleted}: ExerciseItemProps){
-
-    const [sets, setSets] = useState(exercise.sets)
-
-    function onCompleteChange(id: number, completed: boolean){
-        setSets((prevSets) => 
-            prevSets.map(set => (
-            set.id === id ? {...set, completed} : set
-        )))
-    }
-
-    function onDeleted(id: number){
-        setSets((prevSets) => (
-            prevSets.filter(set => (
-                set.id !== id
-            ))
-        ))
-    }
+export default function ExerciseItem({exercise, onExerciseDeleted, onSetAction}: ExerciseItemProps){
 
     function onSubmit(weight: number, reps: number){
         const newSet: WorkoutSet = {
@@ -38,8 +18,13 @@ export default function ExerciseItem({exercise, onExerciseDeleted}: ExerciseItem
             reps,
             completed: false
         }
+
+        const newAction: ExerciseAction = {
+            type: "submit",
+            set: newSet
+        }
         
-        setSets((prevSets) => [...prevSets, newSet]);
+        onSetAction(exercise.id, -1, newAction);
     }
 
     return (
@@ -48,9 +33,9 @@ export default function ExerciseItem({exercise, onExerciseDeleted}: ExerciseItem
                 <h1 className="text-2xl font-bold text-blue-400">Workrout {exercise.name}</h1>
 
                 <SetsList
-                sets={sets}
-                onCompleteChange={onCompleteChange}
-                onDeleted={onDeleted}
+                sets={exercise.sets}
+                exerciseId={exercise.id}
+                onSetAction={onSetAction}
                 />
 
                 <AddSetForm
