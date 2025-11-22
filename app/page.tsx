@@ -1,14 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExerciseItem from "./components/ExerciseItem";
-import { exerciseDummyData } from "./data/exerciseDummyData";
 import { ExerciseAction, WorkoutSet } from "./types/set";
 import AddExerciseForm from "./components/AddExerciseForm";
 import { Exercise } from "./types/exercise";
 
 export default function Home() {
 
-  const [dummyExcercises, setExercises] = useState(exerciseDummyData)
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+
+  // Load exercises from localStorage on component mount
+  useEffect(() => {
+    const savedExercises = localStorage.getItem("exercises");
+    if (savedExercises) {
+      setExercises(JSON.parse(savedExercises));
+    }
+  }, []);
+
+  // Save exercises to localStorage whenever exercises change
+  useEffect(() => {
+    localStorage.setItem("exercises", JSON.stringify(exercises));
+  }, [exercises]);
 
   function onExerciseDeleted(id: number){
     setExercises((prevExercises) => (
@@ -67,7 +79,7 @@ export default function Home() {
       <main>
         <h1 className="font-bold text-3xl text-center p-2">Workout Tracker</h1>
         {
-          dummyExcercises.map(exercise => (
+          exercises.map(exercise => (
             <ExerciseItem 
               key={exercise.id}
               exercise={exercise}
