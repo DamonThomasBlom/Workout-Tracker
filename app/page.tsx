@@ -3,6 +3,8 @@ import { useState } from "react";
 import ExerciseItem from "./components/ExerciseItem";
 import { exerciseDummyData } from "./data/exerciseDummyData";
 import { ExerciseAction, WorkoutSet } from "./types/set";
+import AddExerciseForm from "./components/AddExerciseForm";
+import { Exercise } from "./types/exercise";
 
 export default function Home() {
 
@@ -48,6 +50,19 @@ export default function Home() {
     ))
   }
 
+  function onSubmitExercise(exerciseName: string){
+    const newExercise : Exercise = {
+      id: Date.now(),
+      name: exerciseName,
+      sets: []
+    }
+
+    // Append to the new exercises
+    setExercises(prevExercise => ([
+      ...prevExercise, newExercise
+    ]))
+  }
+
   return (
       <main>
         <h1 className="font-bold text-3xl text-center p-2">Workout Tracker</h1>
@@ -61,11 +76,9 @@ export default function Home() {
             />
           ))
         }
-        {/* <ExerciseItem 
-          exercise={dummyExcercises[0]}
-          onExerciseDeleted={onExerciseDeleted}
-          onSetAction={onSetAction}
-        /> */}
+        <AddExerciseForm 
+          onSubmit={onSubmitExercise}
+        />
       </main>
   );
 }

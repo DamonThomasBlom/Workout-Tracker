@@ -44,16 +44,16 @@ export default function AddSetForm({onSubmit}: SetFormProps) {
       <button 
         type='submit'
         className='border h-8 bg-green-600 rounded-md p-2 text-center flex items-center justify-center'>
-        Submit
+        Create Set
       </button>
     </form> 
 
     : <div className='p-2'>
-      <button
-      className='border rounded-md bg-green-600 p-2'
-      onClick={() => SetCreatingSet(!creatingSet)}>
-        Create Set
-      </button>
+        <button
+        className='border rounded-md bg-green-600 p-2'
+        onClick={() => SetCreatingSet(!creatingSet)}>
+          Add Set
+        </button>
       </div>}
     </>
   )

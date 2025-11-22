@@ -30,7 +30,9 @@ export default function ExerciseItem({exercise, onExerciseDeleted, onSetAction}:
     return (
         <div className="p-4">
             <div className="border-2 rounded-md p-2 space-x-1 bg-gray-700">
-                <h1 className="text-2xl font-bold text-blue-400">Workrout {exercise.name}</h1>
+                <h1 className="text-2xl font-bold text-blue-400">
+                    Workout: {exercise.name}
+                </h1>
 
                 <SetsList
                 sets={exercise.sets}
